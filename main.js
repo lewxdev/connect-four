@@ -64,12 +64,14 @@ document.body.addEventListener('keyup', (e) => {
                 if (typeof key === 'undefined') key = 9;
                 else break;
             }
-            if (key < boardWidth && board[key].length < boardHeight) board[key].push(game.turn), game.turnCount++;
-            if (game.turnCount >= 4)
-                if (game.evaluate(key, board[key][board[key].length - 1]).includes(comp[game.turn])) {
-                    console.log('Player ' + (game.turn + 1) + ' Won.'), game.end = 1;
-                } else game.turnChange();
-            else game.turnChange();
+            if (key < boardWidth && board[key].length < boardHeight) {
+                board[key].push(game.turn), game.turnCount++;
+                if (game.turnCount >= 4)
+                    if (game.evaluate(key, board[key][board[key].length - 1]).includes(comp[game.turn])) {
+                        console.log('Player ' + (game.turn + 1) + ' Won.'), game.end = 1;
+                    } else game.turnChange();
+                else game.turnChange();
+            }
         }
     }
 });
