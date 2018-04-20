@@ -1,4 +1,6 @@
-let game = {
+import React, { Component } from 'react';
+import './App.css';
+var game = {
     win: ['0000', '1111'],
     board: {
         size: {
@@ -43,30 +45,69 @@ let game = {
             },
         ];
         let str = '';
-        for (let i = 0; i < execute.length; i++)
-            str += execute[i](x, y).join(''), str += i !== execute.length - 1 ? '/' : '';
+        for (let i = 0; i < execute.length; i++) {
+			str += execute[i](x, y).join('');
+			str += i !== execute.length - 1 ? '/' : '';
+		}
         return str;
     }
 };
 for (let i = 0; i < game.board.size.width; i++) game.board.literal.push([]);
 
+function Base(props) {
+	return <div className='base' children={props.children} />
+}
+
+function Column(props) {
+	let pos = [];
+	for (let i = game.board.size.height - 1; i >= 0; i--) {
+		let literal = <div className='pos' key={i} />;
+		pos.push(literal);
+	}
+	return (
+		<div className='col'>{pos}</div>
+	);
+}
+
+function Board(props) {
+	let cols = [];
+	for (let i = 0; i < game.board.size.width; i++) cols.push(<Column key={i} />);
+	return cols;
+}
+
 document.body.addEventListener('keyup', (e) => {
-    if (!game.end) {
+    if ((e.keyCode >= 48 && e.keyCode <= 57) && !game.end) {
         let key;
-        if (e.keyCode >= 48 && e.keyCode <= 57) {
-            for (let i = 0; i < 10; i++) {
-                key = e.keyCode === i + 49 ? i : undefined;
-                if (typeof key === 'undefined') key = 9;
-                else break;
-            }
-            if (key < game.board.size.width && game.board.literal[key].length < game.board.size.height) {
-                game.board.literal[key].push(game.turn), game.turnCount++;
-                if (game.turnCount >= 4)
-                    if (game.evaluate(game.board.literal, key, game.board.literal[key].length - 1).includes(game.win[game.turn])) {
-                        console.log('Player ' + (game.turn + 1) + ' Won.'), game.end = 1;
-                    } else game.changeTurn();
-                else game.changeTurn();
-            }
+        for (let i = 0; i < 10; i++) {
+            key = e.keyCode === i + 49 ? i : undefined;
+			if (typeof key === 'undefined') key = 9;
+			else break;
+		}
+        if (key < game.board.size.width && game.board.literal[key].length < game.board.size.height) {
+			game.board.literal[key].push(game.turn);
+			game.turnCount++;
+            if (game.turnCount >= 4)
+                if (game.evaluate(game.board.literal, key, game.board.literal[key].length - 1).includes(game.win[game.turn])) {
+					console.log('Player ' + (game.turn + 1) + ' Won.');
+					game.end = 1;
+                } else game.changeTurn();
+            else game.changeTurn();
         }
+        console.log('key', key);
+        console.log('baord', game.board.literal);
     }
 });
+
+class App extends Component {
+	render() {
+		return (
+			<div className='game'>
+				<Base>
+					<Board />
+				</Base>
+			</div>
+		);
+	}
+}
+
+export default App;
