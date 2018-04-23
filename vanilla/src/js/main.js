@@ -17,10 +17,14 @@ var game = {
             (x, y) => {
                 let seq = [];
                 seq.push(arr[x][y]);
-                for (let x2 = x + 1; x2 < arr.length; x2++)
+                for (let x2 = x + 1; x2 < arr.length; x2++) {
                     seq.push(arr[x2][y]);
-                for (let x2 = x - 1; x2 >= 0; x2--)
+                    if (typeof arr[x2][y] === 'undefined') seq.push('/');
+                }
+                for (let x2 = x - 1; x2 >= 0; x2--) {
                     seq.unshift(arr[x2][y]);
+                    if (typeof arr[x2][y] === 'undefined') seq.unshift('/');
+                }
                 return seq;
             },
             (x, y) => {
