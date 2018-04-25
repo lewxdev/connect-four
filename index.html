@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>x4-Game</title>
+    <link rel="stylesheet" href="src/style.css" />
+</head>
+
+<body style="user-select:none">
+    <div id="popup">
+        <div id="overlay"></div>
+        <div id="modal">
+            <a href="#">
+                <div id="close">&times;</div>
+            </a>
+            <h1 id="title"></h1>
+            <p id="text"></p>
+        </div>
+    </div>
+    <div class="options">
+        <a href="#popup">
+            <button id="reset" title="Reset">&lt;</button>
+        </a>
+        <a href="#popup">
+            <button id="new" title="New game">&plus;</button>
+        </a>
+        <a href="#popup">
+            <button id="sfx" title="Sound off">&excl;</button>
+        </a>
+        <a href="#popup">
+            <button id="options" title="Options">&#8943;</button>
+        </a>
+    </div>
+    <div class="game">
+        <div class="base"></div>
+    </div>
+    <div class="turn">
+        <div id="p-0"></div>
+        <div id="p-1"></div>
+    </div>
+    <script src="src/js/main.js"></script>
+</body>
+
+</html>
