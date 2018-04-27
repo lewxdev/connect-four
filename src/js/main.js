@@ -1,15 +1,27 @@
 let exe = {
     settings: () => {
+        let audioState = game.data.flag.music ? 'Music On' : 'Music Off';
         game.popup('new', {
             options: false,
             title: 'Game Settings',
-            text: '<div>Width <input id="opt-width" type="range" min="4" max="10" value="' + game.data.size.width + '" /></div><div>Height <input id="opt-height" type="range" min="4" max="8" value="' + game.data.size.height + '" /></div>'
+            text: '<div>Width <input id="opt-width" type="range" min="4" max="10" value="' + game.data.size.width + '" /></div><div>Height <input id="opt-height" type="range" min="4" max="8" value="' + game.data.size.height + '" /></div><div id="toggle-music" style="text-align:center">' + audioState + '</div>'
         });
         ['width', 'height'].forEach((el) => {
             x('#opt-' + el).on('change', () => {
                 game.data.size[el] = Number(x('#opt-' + el).value);
                 game.drawBoard();
             });
+        });
+        x('#toggle-music').on('click', () => {
+            game.data.flag.music = game.data.flag.music ? 0 : 1;
+            if (game.data.flag.music) {
+                x('#toggle-music').innerHTML = 'Music On'
+                game.audio.music.play();
+            } else {
+                x('#toggle-music').innerHTML = 'Music Off'
+                game.audio.music.currentTime = 0;
+                game.audio.music.pause();
+            }
         });
     },
     reset: () => {
@@ -56,6 +68,14 @@ let exe = {
                 auth: onConfirm
             });
         }
+    },
+    sfx: () => {
+        game.data.flag.sfx = game.data.flag.sfx ? 0 : 1;
+        if (game.data.flag.sfx) game.audio.sfx.play();
+        setTimeout(() => {
+            game.audio.sfx.pause();
+            game.audio.sfx.currentTime = 0;
+        }, 250);
     }
 }
 
@@ -75,4 +95,4 @@ x('body').on('keyup', (e) => {
 x('#settings').on('click', () => exe.settings());
 x('#reset').on('click', () => exe.reset());
 x('#new').on('click', () => exe.new());
-x('#sfx').on('click', () => {});
+x('#sfx').on('click', () => exe.sfx());

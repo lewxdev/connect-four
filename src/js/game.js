@@ -2,7 +2,9 @@ const game = {
     data: {
         flag: {
             turn: 0,
-            end: 0
+            end: 0,
+            sfx: 1,
+            music: 1
         },
         count: {
             turns: 0,
@@ -18,6 +20,10 @@ const game = {
             wins: 0
         }],
         time: 0
+    },
+    audio: {
+        music: new Audio('./src/audio/music.ogg'),
+        sfx: new Audio('./src/audio/woosh.ogg')
     },
     board: [],
     drawBoard: () => {
@@ -131,6 +137,7 @@ const game = {
         if ((which < game.data.size.width && game.board[which].length < game.data.size.height) && !game.data.flag.end) {
             let thisPiece = x('.col')[which].getElementsByClassName('pos')[(game.data.size.height - 1) - game.board[which].length];
             thisPiece.appendChild(pos);
+            game.board[which].push(game.data.flag.turn);
             pos.animate([{
                     transform: 'translateY(-' + (61.5 * (game.data.size.height - game.board[which].length)) + 'px)'
                 },
@@ -141,8 +148,14 @@ const game = {
                 duration: 75 * (game.data.size.height - game.board[which].length),
                 easing: 'ease-in'
             });
-            game.board[which].push(game.data.flag.turn);
             game.data.count.turns++;
+            if (game.data.flag.sfx) {
+                game.audio.sfx.play();
+                setTimeout(() => {
+                    game.audio.sfx.pause();
+                    game.audio.sfx.currentTime = 0;
+                }, 250);
+            }
             if (game.data.count.turns >= 4)
                 if (game.evaluate(which, game.board[which].length - 1).includes(['0000', '1111'][game.data.flag.turn])) {
                     game.data.count.turns = 0;
@@ -166,11 +179,15 @@ const game = {
         }
     }
 };
-const initialData = Object.freeze({ ...game.data });
-['#close', '#deny'].forEach((el) => x(el).on('click', () => game.popup('close')));
+const initialData = Object.freeze({ ...game.data
+});
+['#close', '#deny', '#overlay'].forEach((el) => x(el).on('click', () => game.popup('close')));
 x('body').on('keyup', (e) => {
     if (e.keyCode === 27 && x('#popup').offsetLeft >= 0) game.popup('close');
 });
 
 game.drawBoard();
 x('#p-0').classList.add('highlight');
+
+game.audio.music.loop = true;
+game.audio.music.play();
