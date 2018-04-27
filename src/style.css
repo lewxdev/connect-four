@@ -3,6 +3,11 @@
     src: url(typeface/default.otf);
 }
 
+b {
+    font-weight: 900;
+    font-size: 102.5%;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -23,10 +28,36 @@ a:active {
     text-decoration: none;
 }
 
+.info {
+    letter-spacing: 1px;
+}
+
+#logo {
+    padding: 0 5vw;
+    letter-spacing: -0.38em;
+    font-size: 6em;
+}
+
+#legal {
+    position: absolute;
+    bottom: 2.5vh;
+    font-size: 50%;
+}
+
+#hotkey {
+    right: 2.5vw;
+    font-size: 65%;
+}
+
+#legal a:hover {
+    color: goldenrod;
+}
+
 ul {
+    font-size: 95%;
     list-style: none;
     margin: 0;
-    padding: 6.125px;
+    padding: 0 12.5px;
 }
 
 #popup:target {
@@ -85,71 +116,127 @@ ul {
     margin: 0;
 }
 
-.turn {
+#modal-options {
+    display: flex;
+    align-self: flex-end;  
+    position: absolute;
+    bottom: 0;
+}
+
+#confirm {
+    background: #51925180;
+    border-radius: 0 0 12.5px 0;
+    color: white;
+}
+
+#confirm:hover {
+    cursor: pointer;
+    background: #519251a0;
+}
+
+#deny:hover {
+    cursor: pointer;
+    background: #acacac40;
+}
+
+#confirm, #deny {
+    padding: 8px 12.5px;
+}
+
+#player-info {
     display: flex;
     padding: 1.125vh 1.125vw;
 }
 
 .pos,
-.turn div,
-.base,
+#player-info #p-0,
+#player-info #p-1,
+._of-0,
+._of-1,
+#base,
 button {
-    box-shadow: inset #00000080 2.5px 2.5px 5px;
+    box-shadow: inset #00000065 2.5px 2.5px 5px;
 }
 
-.turn div {
+#player-info #p-0,
+#player-info #p-1 {
     margin: 1.125vh 1.125vw;
     border-radius: 50% 0;
     height: 25px;
     width: 25px;
 }
 
-.options {
+.user-data {
+    display: flex;
+}
+
+.user-data ul {
+    padding: 0 25px;
+}
+
+.user-data#_0 {
+    text-align: right;
+}
+
+#text {
+    display: flex;
+    flex-direction: column;
+    padding: 12.5px 0;
+}
+
+#game-options {
     padding: 2.5vh 2.5vw;
 }
 
-.options button {
+#game-options button {
     background: transparent;
     border: #5f97ad solid 1px;
     border-radius: 6.125px;
     color: #ffffff;
-    height: 50px;
-    width: 50px;
+    height: 38px;
+    width: 38px;
     margin: 0 6.125px;
     text-decoration: none;
-    font-size: 1.5em;
-    font-weight: 300;
+    font-size: 1.25em;
+    font-weight: 100;
 }
 
-.options button:hover {
+#game-options button:hover {
     background: #6a798080;
     cursor: pointer;
 }
 
-.options button:active,
-.options button:focus {
+#game-options button:active,
+#game-options button:focus {
     outline: none;
 }
 
-.options button:active {
+#game-options button:active {
     background: #3a4144;
 }
 
-.base {
+#base {
     display: inline-flex;
     background: transparent;
     padding: 7.5px;
-    border: solid #a7a14e 1px;
+    border: solid #a7a14ed8 1px;
 }
 
 .pos {
     position: relative;
     background: transparent;
     border-radius: 50%;
-    border: #b3ac4b solid 1px;
+    border: #b3ac4bd8 solid 1px;
     margin: 12.5px 6.25px;
     height: 46px;
     width: 46px;
+}
+
+#p-0, #p-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80%;
 }
 
 #p-0 {
@@ -167,7 +254,6 @@ button {
     height: 24px;
     width: 24px;
     border-radius: 50%;
-    box-shadow: none;
 }
 
 ._of-0 {
@@ -187,9 +273,32 @@ button {
     background: #7080902f;
 }
 
-.game {
+.ratio {
+    font-size: 1.5em;
+}
+
+#viewport {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.info#logo, .info#hotkey {
+    height: inherit;
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+#game {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .status {

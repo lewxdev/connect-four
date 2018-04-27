@@ -14,30 +14,77 @@
                 <div id="close">&times;</div>
             </a>
             <h1 id="title"></h1>
-            <p id="text"></p>
+            <div id="text"></div>
+            <div id="modal-options">
+                <div id="deny">Cancel</div>
+                <div id="confirm">Continue</div>
+            </div>
         </div>
     </div>
-    <div class="options">
-        <a href="#popup">
-            <button id="reset" title="Reset">&lt;</button>
-        </a>
-        <a href="#popup">
-            <button id="new" title="New game">&plus;</button>
-        </a>
-        <a href="#popup">
-            <button id="sfx" title="Sound off">&excl;</button>
-        </a>
-        <a href="#popup">
-            <button id="options" title="Options">&#8943;</button>
-        </a>
+    <div id="viewport">
+        <div class="info" id="logo">X4</div>
+        <div id="game">
+            <div id="game-options">
+                <a href="#popup">
+                    <button id="settings" title="Options">&#8943;</button>
+                </a>
+                <a href="#popup">
+                    <button id="reset" title="Reset">&lt;</button>
+                </a>
+                <a href="#popup">
+                    <button id="new" title="New game">&plus;</button>
+                </a>
+                <button id="sfx" title="Sound off">&excl;</button>
+            </div>
+            <div id="base"></div>
+            <div id="player-info">
+                <div class="user-data" id="_0">
+                    <ul>
+                        <li>
+                            <b>P1</b>
+                            <li class="ratio">0:0</li>
+                        </li>
+                    </ul>
+                    <div id="p-0" class="indicator"></div>
+                </div>
+                <div class="user-data" id="_1">
+                    <div id="p-1" class="indicator"></div>
+                    <ul>
+                        <li>
+                            <b>P2</b>
+                            <li class="ratio">0:0</li>
+                        </li>
+                    </ul>
+                </div>
+                <div id="time"></div>
+            </div>
+            <div class="info" id="legal">
+                <a href="https://github.com/doctorarbitrary/" target="_blank">J. Lewis</a> &copy;2018, Audio by
+                <a href="https://www.audiotool.com/user/fridgemeat" target="_blank">Fridgemeat</a>
+            </div>
+        </div>
+        <div class="info" id="hotkey">
+            <ul>
+                <li>
+                    <b>Hotkeys</b>
+                    <ul>
+                        <li>
+                            <b>Settings</b> S</li>
+                        <li>
+                            <b>Reset</b> R</li>
+                        <li>
+                            <b>New Game</b> N</li>
+                        <li>
+                            <b>Toggle SFX</b> F</li>
+                        <li>
+                            <b>Gameplay</b> 0-9 / Click</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="game">
-        <div class="base"></div>
-    </div>
-    <div class="turn">
-        <div id="p-0"></div>
-        <div id="p-1"></div>
-    </div>
+    <script src="src/js/xclude.js"></script>
+    <script src="src/js/game.js"></script>
     <script src="src/js/main.js"></script>
 </body>
 
