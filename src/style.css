@@ -142,9 +142,18 @@ ul {
     background: #519251a0;
 }
 
-#deny:hover, #toggle-music:hover {
+#deny:hover,
+#toggle-music:hover,
+#opt-1:hover,
+#opt-2:hover {
     cursor: pointer;
     background: #acacac40;
+}
+
+#player-options {
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 #toggle-music {
@@ -153,7 +162,9 @@ ul {
     bottom: 0;
 }
 
-#confirm, #deny, #toggle-music {
+#confirm,
+#deny,
+#toggle-music {
     padding: 8px 12.5px;
 }
 
@@ -196,6 +207,15 @@ button {
     display: flex;
     flex-direction: column;
     padding: 12.5px 0;
+}
+
+#opt-1,
+#opt-2 {
+    border: #5f97ad solid 1px;
+    border-radius: 6.125px;
+    margin: 12.5px;
+    height: 25px;
+    width: 25px;
 }
 
 #game-options {
@@ -246,7 +266,8 @@ button {
     width: 46px;
 }
 
-#p-0, #p-1 {
+#p-0,
+#p-1 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -291,7 +312,8 @@ button {
     font-size: 1.5em;
 }
 
-.info#logo, .info#hotkey {
+.info#logo,
+.info#hotkey {
     height: inherit;
     display: flex;
     align-items: center;
@@ -304,7 +326,6 @@ button {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
 }
 
 .status {

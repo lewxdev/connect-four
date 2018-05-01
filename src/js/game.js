@@ -8,7 +8,8 @@ const game = {
         },
         count: {
             turns: 0,
-            games: 0
+            games: 0,
+            players: 0
         },
         size: {
             height: 7,
@@ -33,7 +34,14 @@ const game = {
             let col = document.createElement('div');
             col.classList.add('col');
             x('#base').appendChild(col);
-            col.on('click', () => game.logic(i));
+            col.on('click', () => {
+                game.logic(i)
+                if (game.data.count.players === 1) {
+                    setTimeout(() => {
+                        if (game.data.flag.turn === 1) game.logic(Math.floor(Math.random() * game.data.size.width));
+                    }, 1200);
+                }
+            });
             game.board.push([]);
             for (let j = 0; j < game.data.size.height; j++) {
                 let pos = document.createElement('div');
@@ -125,11 +133,10 @@ const game = {
             x('#text').innerHTML = data.text;
             setTimeout(() => location.href = '#popup', 350);
         } else if (handler === 'close') {
-            game.data.popupID = null;
             location.href = '#';
             x('#title').innerHTML = '';
             x('#text').innerHTML = '';
-        } else throw new Error('Invalid handler argument for Popup');
+        } else throw new Error('Invalid handler argument for popup');
     },
     logic: (which) => {
         let pos = document.createElement('div');
@@ -179,8 +186,7 @@ const game = {
         }
     }
 };
-const initialData = Object.freeze({ ...game.data
-});
+const initialData = Object.freeze({ ...game.data });
 ['#close', '#deny', '#overlay'].forEach((el) => x(el).on('click', () => game.popup('close')));
 x('body').on('keyup', (e) => {
     if (e.keyCode === 27 && x('#popup').offsetLeft >= 0) game.popup('close');
@@ -188,6 +194,32 @@ x('body').on('keyup', (e) => {
 
 game.drawBoard();
 x('#p-0').classList.add('highlight');
-
-game.audio.music.loop = true;
+game.audio.music.volume = 0;
 game.audio.music.play();
+
+let i = 0;
+let fadeIn = setInterval(() => {
+    game.audio.music.volume = i * 0.0125;
+    i++;
+}, 100);
+setTimeout(() => {
+    setTimeout(() => clearInterval(fadeIn), 8000);
+    setInterval(() => {
+        game.audio.music.currentTime = 0.0125;
+        game.audio.music.play();
+    }, 8000);
+}, 100);
+
+game.popup('new', {
+    options: false,
+    title: 'Player Count',
+    text: '<div id="player-options"><div id="opt-1">i</div><div id="opt-2">ii</div></div>'
+});
+x('#opt-1').on('click', () => {
+    game.data.count.players = 1;
+    game.popup('close');
+});
+x('#opt-2').on('click', () => {
+    game.data.count.players = 2;
+    game.popup('close');
+});

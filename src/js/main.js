@@ -15,12 +15,11 @@ let exe = {
         x('#toggle-music').on('click', () => {
             game.data.flag.music = game.data.flag.music ? 0 : 1;
             if (game.data.flag.music) {
-                x('#toggle-music').innerHTML = 'Music On'
-                game.audio.music.play();
+                x('#toggle-music').innerHTML = 'Music On';
+                game.audio.music.volume = 1;
             } else {
-                x('#toggle-music').innerHTML = 'Music Off'
-                game.audio.music.currentTime = 0;
-                game.audio.music.pause();
+                x('#toggle-music').innerHTML = 'Music Off';
+                game.audio.music.volume = 0;
             }
         });
     },
@@ -42,8 +41,14 @@ let exe = {
     new: () => {
         function onConfirm() {
             game.data.flag.end = game.data.count.turns = 0;
+            game.data.flag.turn = game.data.player[1].wins > game.data.player[0].wins ? 1 : 0
             game.drawBoard();
             game.popup('close');
+            if (game.data.count.players === 1) {
+                setTimeout(() => {
+                    if (game.data.flag.turn === 1) game.logic(Math.floor(Math.random() * game.data.size.width));
+                }, 1200);
+            }
         }
         if (!game.data.flag.end) {
             if (game.data.count.turns === 0) {
@@ -84,13 +89,22 @@ let exe = {
 x('body').on('keyup', (e) => {
     // Gameplay via Number Keys
     let key = e.keyCode >= 49 && e.keyCode <= 57 ? e.keyCode - 49 : e.keyCode === 48 ? 9 : undefined;
-    if (typeof key !== 'undefined') game.logic(key);
+    if (typeof key !== 'undefined') {
+        game.logic(key);
+        if (game.data.count.players === 1) {
+            setTimeout(() => {
+                if (game.data.flag.turn === 1) game.logic(Math.floor(Math.random() * game.data.size.width));
+            }, 1200);
+        }
+    };
     // Settings Menu
     if (e.keyCode === 83) exe.settings();
     // Reset Confirmation
     if (e.keyCode === 82) exe.reset();
     // New Game Confirmation
     if (e.keyCode === 78) exe.new();
+    // Toggle SFX
+    if (e.keyCode === 70) exe.sfx();
 });
 x('#settings').on('click', () => exe.settings());
 x('#reset').on('click', () => exe.reset());
