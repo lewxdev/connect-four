@@ -143,7 +143,6 @@ ul {
 }
 
 #deny:hover,
-#toggle-music:hover,
 #opt-1:hover,
 #opt-2:hover {
     cursor: pointer;
@@ -156,15 +155,8 @@ ul {
     display: flex;
 }
 
-#toggle-music {
-    align-self: center;
-    position: absolute;
-    bottom: 0;
-}
-
 #confirm,
-#deny,
-#toggle-music {
+#deny {
     padding: 8px 12.5px;
 }
 
@@ -318,6 +310,10 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.hide {
+	visibility: hidden;
 }
 
 #game {

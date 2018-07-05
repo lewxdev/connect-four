@@ -1,34 +1,25 @@
+import { Game } from "./game/main.js";
+let game = new Game();
+
 let exe = {
     settings: () => {
-        let audioState = game.data.flag.music ? 'Music On' : 'Music Off';
         game.popup('new', {
             options: false,
             title: 'Game Settings',
-            text: '<div>Width <input id="opt-width" type="range" min="4" max="10" value="' + game.data.size.width + '" /></div><div>Height <input id="opt-height" type="range" min="4" max="8" value="' + game.data.size.height + '" /></div><div id="toggle-music" style="text-align:center">' + audioState + '</div>'
+            text: '<div>Width <input id="opt-width" type="range" min="4" max="10" value="' + game.data.size.width + '" /></div><div>Height <input id="opt-height" type="range" min="4" max="8" value="' + game.data.size.height + '" /></div>'
         });
         ['width', 'height'].forEach((el) => {
-            x('#opt-' + el).on('change', () => {
-                game.data.size[el] = Number(x('#opt-' + el).value);
+            document.querySelector('#opt-' + el).addEventListener('change', () => {
+                game.data.size[el] = Number(document.querySelector('#opt-' + el).value);
                 game.drawBoard();
             });
-        });
-        x('#toggle-music').on('click', () => {
-            game.data.flag.music = game.data.flag.music ? 0 : 1;
-            if (game.data.flag.music) {
-                x('#toggle-music').innerHTML = 'Music On';
-                game.audio.music.volume = 1;
-            } else {
-                x('#toggle-music').innerHTML = 'Music Off';
-                game.audio.music.volume = 0;
-            }
         });
     },
     reset: () => {
         function onConfirm() {
-            for (let el of x('.indicator')) el.innerHTML = '';
-            for (let el of x('.ratio')) el.innerHTML = '0:0';
-            game.data = initialData;
-            game.drawBoard();
+            for (let el of document.querySelectorAll('.indicator')) el.innerHTML = '';
+            for (let el of document.querySelectorAll('.ratio')) el.innerHTML = '0:0';
+			game = new Game();
             game.popup('close');
         }
         game.popup('new', {
@@ -86,17 +77,10 @@ let exe = {
 
 // Event Listeners
 // Hotkeys
-x('body').on('keyup', (e) => {
+document.querySelector('body').addEventListener('keyup', (e) => {
     // Gameplay via Number Keys
     let key = e.keyCode >= 49 && e.keyCode <= 57 ? e.keyCode - 49 : e.keyCode === 48 ? 9 : undefined;
-    if (typeof key !== 'undefined') {
-        game.logic(key);
-        if (game.data.count.players === 1) {
-            setTimeout(() => {
-                if (game.data.flag.turn === 1) game.logic(Math.floor(Math.random() * game.data.size.width));
-            }, 1200);
-        }
-    };
+    if (key < game.data.size.width) game.logic(key);
     // Settings Menu
     if (e.keyCode === 83) exe.settings();
     // Reset Confirmation
@@ -106,7 +90,7 @@ x('body').on('keyup', (e) => {
     // Toggle SFX
     if (e.keyCode === 70) exe.sfx();
 });
-x('#settings').on('click', () => exe.settings());
-x('#reset').on('click', () => exe.reset());
-x('#new').on('click', () => exe.new());
-x('#sfx').on('click', () => exe.sfx());
+document.querySelector('#settings').addEventListener('click', () => exe.settings());
+document.querySelector('#reset').addEventListener('click', () => exe.reset());
+document.querySelector('#new').addEventListener('click', () => exe.new());
+document.querySelector('#sfx').addEventListener('click', () => exe.sfx());
